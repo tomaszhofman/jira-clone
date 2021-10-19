@@ -24,6 +24,7 @@ export enum IssuePriority {
 
 export const Issues = [
   {
+    id: 1,
     title: 'Issue title 2',
     type: IssueType.TASK,
     status: IssueStatus.BACKLOG,
@@ -37,6 +38,7 @@ export const Issues = [
   },
 
   {
+    id: 2,
     title: "Click on an issue to see what's behind it.",
     type: IssueType.TASK,
     status: IssueStatus.BACKLOG,
