@@ -7,13 +7,11 @@ import TooltipButton from 'src/shared/components/TooltipButton/TooltipButton';
 import styled from 'styled-components';
 
 import { color } from '../../shared/utils/styles';
-import { Navigation } from '../Navigation';
+import { Navigation } from './Navigation';
 
-const PHOTO_URL =
-  'https://i1.wp.com/avatar-management--avatars.us-west-2.prod.public.atl-paas.net/initials/TH-4.png?ssl=1';
-
-const Bar = styled.div`
+export const LineBar = styled.div`
   ::after {
+    z-index: 10;
     position: absolute;
     content: '';
     height: 0.4rem;
@@ -49,7 +47,7 @@ const StyledInput = styled(Input)`
 
 const TopBar = () => {
   return (
-    <Bar>
+    <LineBar>
       <Wrapper>
         <Navigation />
         <OtherOptions>
@@ -57,10 +55,10 @@ const TopBar = () => {
           <TooltipButton label="Powiadomienia" icon={<SvgNotification />} />
           <TooltipButton label="Pomoc" icon={<SvgHelp />} />
           <TooltipButton label="Ustawienia" icon={<SvgSettings />} />
-          <TooltipButton label="Twój profil i ustawienia" photo={PHOTO_URL} />
+          <TooltipButton label="Twój profil i ustawienia" photo="" />
         </OtherOptions>
       </Wrapper>
-    </Bar>
+    </LineBar>
   );
 };
 

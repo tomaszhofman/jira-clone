@@ -1,6 +1,11 @@
 import { createGlobalStyle, css } from 'styled-components';
 
 export const BaseStyle = createGlobalStyle`${css`
+  :root {
+    --topNavigationHeight: 5.6rem;
+    --leftSidebarWidth: 57.5rem;
+    --main-bg-color: pink;
+  }
   *,
   *::after,
   *::before {
