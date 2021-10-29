@@ -8,8 +8,8 @@ import Project from './Project';
 import { BaseStyle } from './App/BaseStyle';
 
 function App() {
-  const { data } = useQuery('issues', async () => {
-    const issues = await client('/issues');
+  const { data } = useQuery('project', async () => {
+    const issues = await client('/project');
     return issues;
   });
 

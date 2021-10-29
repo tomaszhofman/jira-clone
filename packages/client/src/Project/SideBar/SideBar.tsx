@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { Children, useMemo } from 'react';
 import SvgArrowRight from 'src/shared/assets/icons/ArrowRight';
 import SvgNotification from 'src/shared/assets/icons/Notification';
 import TooltipButton from 'src/shared/components/TooltipButton/TooltipButton';
@@ -7,15 +7,25 @@ import { Link, SIDEBAR_LINKS } from 'src/shared/constants/sideBarLinks';
 import useResize from 'src/shared/hooks/useResize';
 import styled, { css } from 'styled-components';
 
-const Wrapper = styled.aside<{ width: number }>`
-  position: fixed;
+const Flex = styled.div`
   display: flex;
+`;
+
+const ChildrenWrapper = styled.div`
+  flex: 3;
+`;
+
+const Wrapper = styled.aside<{ width: number }>`
+  display: flex;
+
   flex-direction: column;
-  top: var(--topNavigationHeight);
+  position: relative;
   /* left: var(--leftSidebarWidth, 0px); */
+
   width: ${({ width }) => `${width}px`};
   bottom: 0px;
   background-color: #fafbfc;
+  height: calc(100vh - var(--topNavigationHeight));
 `;
 
 const ResizableArea = styled.div`
@@ -197,45 +207,51 @@ const ResizableAreaLineButton = styled.button`
   border: none;
 `;
 
-const SideBar = () => {
+const SideBar: React.FC = ({ children }) => {
   const { width, enableResize } = useResize(200);
 
   // console.log(width, enableResize);
 
   return (
-    <Wrapper width={width}>
-      <ProjectNavigation>
-        <ProjectNavHeader>
-          <ProjectInfo>
-            <ProfilePhotoBox>
-              <ProfilePhoto />
-            </ProfilePhotoBox>
-            <ProjectTexts>
-              <ProjectName>jira-clone</ProjectName>
-              <ProjectCategory>Project opgorgramowania</ProjectCategory>
-            </ProjectTexts>
-          </ProjectInfo>
-        </ProjectNavHeader>
-        <ProjectNavItems>
-          {SIDEBAR_LINKS.map((link) => {
-            return renderLinkItem(link);
-          })}
-        </ProjectNavItems>
-      </ProjectNavigation>
-      <ResizableArea onMouseDown={enableResize}>
-        <ResizableAreaLine>
-          <ResizableAreaLineButton>
-            <SvgArrowRight />
-          </ResizableAreaLineButton>
-        </ResizableAreaLine>
-      </ResizableArea>
-      <Footer>
-        <FooterText>Korzystasz z projektu zarządzanego przez zespół</FooterText>
-        <div style={{ margin: '0.6rem' }}>
-          <FooterSubText>Dowiedz się wiecej</FooterSubText>
-        </div>
-      </Footer>
-    </Wrapper>
+    <Flex>
+      <Wrapper width={width}>
+        <ProjectNavigation>
+          <ProjectNavHeader>
+            <ProjectInfo>
+              <ProfilePhotoBox>
+                <ProfilePhoto />
+              </ProfilePhotoBox>
+              <ProjectTexts>
+                <ProjectName>jira-clone</ProjectName>
+                <ProjectCategory>Project opgorgramowania</ProjectCategory>
+              </ProjectTexts>
+            </ProjectInfo>
+          </ProjectNavHeader>
+          <ProjectNavItems>
+            {SIDEBAR_LINKS.map((link) => {
+              return renderLinkItem(link);
+            })}
+          </ProjectNavItems>
+        </ProjectNavigation>
+        <ResizableArea onMouseDown={enableResize}>
+          <ResizableAreaLine>
+            <ResizableAreaLineButton>
+              <SvgArrowRight />
+            </ResizableAreaLineButton>
+          </ResizableAreaLine>
+        </ResizableArea>
+        <Footer>
+          <FooterText>
+            Korzystasz z projektu zarządzanego przez zespół
+          </FooterText>
+          <div style={{ margin: '0.6rem' }}>
+            <FooterSubText>Dowiedz się wiecej</FooterSubText>
+          </div>
+        </Footer>
+      </Wrapper>
+
+      <ChildrenWrapper>{children}</ChildrenWrapper>
+    </Flex>
   );
 };
 
@@ -244,7 +260,7 @@ const renderLinkItem = (link: Link) => {
   const Icon = link.icon;
 
   return (
-    <LinkItem isImplemented={link.to || ''}>
+    <LinkItem key={link.name} isImplemented={link.to || ''}>
       <Icon />
       <LinkText>{link.name}</LinkText>
       {!isImplemented && <NotImplemented>NOT IMPLEMENTED</NotImplemented>}
