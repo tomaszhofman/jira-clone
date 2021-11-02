@@ -42,7 +42,7 @@ export const db = factory({
     description: () => faker.finance.transactionDescription(),
     category: () => ProjectCategory.SOFTWARE,
     users: manyOf('user'),
-    issues: manyOf('issue'),
+    status: manyOf('status'),
   },
 
   user: {

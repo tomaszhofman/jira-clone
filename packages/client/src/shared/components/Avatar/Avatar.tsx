@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 type Props = {
   name: string;
   avatarURL: string;
+  onClick: () => void;
 };
 
 const Image = styled.div<Props>`
@@ -18,7 +19,7 @@ const Image = styled.div<Props>`
 
 const Initials = styled.div``;
 
-const Avatar: React.FC<Props> = ({ name, avatarURL, ...props }) => {
+const BaseAvatar: React.FC<Props> = ({ name, avatarURL, ...props }) => {
   //   const customProps = {
   //     name,
   //     avatarURL,
@@ -33,5 +34,7 @@ const Avatar: React.FC<Props> = ({ name, avatarURL, ...props }) => {
     </Initials>
   );
 };
+
+const Avatar = memo(BaseAvatar);
 
 export { Avatar };

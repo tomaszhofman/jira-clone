@@ -17,6 +17,7 @@ const createDataBase = () => {
 
   let issues: any = [];
   let project;
+  let status: any = [];
 
   for (let i = 0; i < 3; i++) {
     db.comments.create({
@@ -30,15 +31,17 @@ const createDataBase = () => {
         reporterId: users[1].id,
       })
     );
-  }
 
-  db.status.create({
-    issuesIds: issues,
-  });
+    status.push(
+      db.status.create({
+        issuesIds: issues,
+      })
+    );
+  }
 
   project = db.project.create({
     users,
-    issues,
+    status,
   });
 };
 createDataBase();

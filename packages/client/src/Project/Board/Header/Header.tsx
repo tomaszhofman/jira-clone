@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { Breadcrumb } from 'src/shared/components/Breadcrumbs';
 import EditableTitle from 'src/shared/components/EditableTitle/EditableTitle';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 const Wrapper = styled.div``;
 
@@ -11,12 +13,15 @@ const HeaderContent = styled.div`
 const Header = () => {
   const [isTitleEditing, setIsTitleEditing] = useState(false);
   const [title, setTitle] = useState('Tablica JS');
+  const { pathname } = useLocation();
 
-  console.log(title);
+  const pathnames = pathname.split('/').slice(1);
 
   return (
     <Wrapper>
-      <HeaderContent>Breadcrums/tEST</HeaderContent>
+      <HeaderContent>
+        <Breadcrumb items={pathnames} />
+      </HeaderContent>
 
       <EditableTitle
         onClick={() => setIsTitleEditing(!isTitleEditing)}
